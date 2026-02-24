@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Lilly Gould — Textile Zine Board Inspired</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lilly Gould — Dynamic Plaid Zine</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=IBM+Plex+Mono&display=swap" rel="stylesheet">
 <style>
 :root{
@@ -159,14 +159,7 @@ footer{text-align:center;padding:40px;font-size:0.8rem;background:var(--cream);c
 <div class="art-piece"><img src="painting1.jpg" alt=""><div class="caption">Title — Acrylic — 2026</div></div>
 <div class="art-piece"><img src="painting2.jpg" alt=""><div class="caption">Title — Oil — 2026</div></div>
 </div>
-<div class="paper-scrap">Favorite colors inspired by the vision board</div>
-
-<!-- Interactive plaid squares -->
-<div class="plaid-square pink" style="top:10px;left:30px;"></div>
-<div class="plaid-square lime" style="top:60px;left:70px;"></div>
-<div class="plaid-square pink" style="top:120px;left:150px;"></div>
-<div class="plaid-square lime" style="top:200px;left:50px;"></div>
-
+<div class="paper-scrap">Colors & plaid from vision board</div>
 </div>
 </section>
 
@@ -178,13 +171,6 @@ footer{text-align:center;padding:40px;font-size:0.8rem;background:var(--cream);c
 <div class="art-piece"><img src="fiber2.jpg" alt=""><div class="caption">Tapestry — 2026</div></div>
 </div>
 <div class="paper-scrap">Plaid textures & layered textiles</div>
-
-<!-- Interactive plaid squares -->
-<div class="plaid-square pink" style="top:20px;left:40px;"></div>
-<div class="plaid-square lime" style="top:80px;left:90px;"></div>
-<div class="plaid-square pink" style="top:140px;left:60px;"></div>
-<div class="plaid-square lime" style="top:220px;left:120px;"></div>
-
 </div>
 </section>
 
@@ -205,6 +191,7 @@ footer{text-align:center;padding:40px;font-size:0.8rem;background:var(--cream);c
 <footer>© 2026 Lilly Gould</footer>
 
 <script>
+// Scroll reveal
 const sections=document.querySelectorAll("section");
 const observer=new IntersectionObserver(entries=>{
 entries.forEach(entry=>{
@@ -212,6 +199,23 @@ if(entry.isIntersecting){entry.target.classList.add("visible");}
 });
 },{threshold:0.2});
 sections.forEach(section=>observer.observe(section));
+
+// Generate random interactive plaid squares
+function generatePlaidSquares(sectionId,count){
+  const section=document.getElementById(sectionId);
+  for(let i=0;i<count;i++){
+    const square=document.createElement("div");
+    square.classList.add("plaid-square");
+    square.classList.add(Math.random()>0.5?"pink":"lime");
+    square.style.top=Math.random()*section.offsetHeight+"px";
+    square.style.left=Math.random()*section.offsetWidth+"px";
+    section.appendChild(square);
+  }
+}
+
+// Generate 15 squares per section
+generatePlaidSquares("paintings",15);
+generatePlaidSquares("fiber",15);
 </script>
 </body>
 </html>
