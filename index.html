@@ -8,7 +8,7 @@
 <style>
 :root {
   --pink: #d4a3cc;          /* softer pastel pink */
-  --purple: #b89ad0;        /* gentle lavender */
+  --rosy-pink: #e494c4;     /* replaced purple with this rosy pink */
   --lime-green: #b9d179;    /* muted lime green */
   --buttery-yellow: #f3eb9d; /* soft creamy yellow */
   --white: #fff;
@@ -93,14 +93,14 @@ header {
       90deg,
       var(--pink) 0 30px,
       var(--buttery-yellow) 30px 60px,
-      var(--purple) 60px 90px,
+      var(--rosy-pink) 60px 90px,
       var(--lime-green) 90px 120px
     ),
     repeating-linear-gradient(
       0deg,
       var(--pink) 0 30px,
       var(--buttery-yellow) 30px 60px,
-      var(--purple) 60px 90px,
+      var(--rosy-pink) 60px 90px,
       var(--lime-green) 90px 120px
     );
   background-blend-mode: multiply;
@@ -183,8 +183,8 @@ section.visible {
 
 /* BACKGROUND VARIATIONS */
 
-/* Paintings: PLAID with bigger squares and simpler pattern */
-#paintings {
+/* Fiber: PLAID with bigger squares and simpler pattern (switched to fiber) */
+#fiber {
   position: relative;
   background-color: var(--white);
   background-image:
@@ -192,27 +192,27 @@ section.visible {
       90deg,
       var(--pink) 0 40px,
       var(--buttery-yellow) 40px 80px,
-      var(--purple) 80px 120px,
+      var(--rosy-pink) 80px 120px,
       var(--lime-green) 120px 160px
     ),
     repeating-linear-gradient(
       0deg,
       var(--pink) 0 40px,
       var(--buttery-yellow) 40px 80px,
-      var(--purple) 80px 120px,
+      var(--rosy-pink) 80px 120px,
       var(--lime-green) 120px 160px
     );
   background-blend-mode: multiply;
   background-size: 160px 160px;
 }
 
-/* Fiber: POLKA DOTS */
-#fiber {
+/* Paintings: POLKA DOTS (switched to paintings) */
+#paintings {
   position: relative;
   background-color: var(--white);
   background-image:
     radial-gradient(var(--pink) 8%, transparent 9%),
-    radial-gradient(var(--purple) 8%, transparent 9%);
+    radial-gradient(var(--rosy-pink) 8%, transparent 9%);
   background-position: 0 0, 50px 50px;
   background-size: 100px 100px;
 }
@@ -227,7 +227,7 @@ section.visible {
       var(--pink) 0 25px,
       var(--lime-green) 25px 50px,
       var(--buttery-yellow) 50px 75px,
-      var(--purple) 75px 100px
+      var(--rosy-pink) 75px 100px
     );
 }
 
@@ -312,7 +312,7 @@ footer {
         <div class="caption">Title — Oil — 2026</div>
       </div>
     </div>
-    <div class="paper-scrap">Colors & plaid inspired by fabric photo</div>
+    <div class="paper-scrap">Colors & patterns inspired by fabric photo</div>
   </div>
 </section>
 
