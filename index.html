@@ -1,221 +1,362 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Lilly Gould — Dynamic Plaid Zine</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=IBM+Plex+Mono&display=swap" rel="stylesheet">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Lilly Gould — Textile Zine Inspired by Plaid</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=IBM+Plex+Mono&display=swap" rel="stylesheet" />
 <style>
-:root{
-  --hot-pink:#ff2a8d;
-  --lime:#c4ff00;
-  --cream:#fdf8f2;
-  --plum:#5e2b5f;
-  --brown:#7a4e2d;
+:root {
+  --bright-pink: #d9006c;
+  --soft-purple: #b08de0;
+  --lime-green: #b0e819;
+  --soft-yellow: #f0e87f;
+  --white: #fefefe;
+  --plum: #5e2b5f;
+  --brown: #7a4e2d;
+  --cream: #fdf8f2;
 }
 
 /* Smooth scroll */
-html{scroll-behavior:smooth;}
-body{
-  margin:0;
-  font-family:"IBM Plex Mono",monospace;
-  color:var(--plum);
+html {
+  scroll-behavior: smooth;
+}
+body {
+  margin: 0;
+  font-family: "IBM Plex Mono", monospace;
+  color: var(--plum);
   background: var(--cream);
-  overflow-x:hidden;
-  position:relative;
+  overflow-x: hidden;
+  position: relative;
 }
 
 /* PAPER TEXTURE */
-body::before{
-  content:"";
-  position:fixed;
-  top:0;left:0;width:100%;height:100%;
-  pointer-events:none;
-  background-image:url("https://www.transparenttextures.com/patterns/paper-fibers.png");
-  opacity:0.15;
-  z-index:-1;
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  background-image: url("https://www.transparenttextures.com/patterns/paper-fibers.png");
+  opacity: 0.15;
+  z-index: -1;
 }
 
 /* NAVIGATION - QUILT BLOCK */
-nav{
-  position:fixed;top:0;width:100%;
-  display:flex;justify-content:center;gap:20px;
-  background:var(--cream);padding:15px 0;border-bottom:2px solid var(--brown);z-index:1000;
+nav {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  background: var(--cream);
+  padding: 15px 0;
+  border-bottom: 2px solid var(--brown);
+  z-index: 1000;
 }
-nav a{
-  text-decoration:none;
-  font-family:"Playfair Display",serif;
-  background:var(--lime);
-  color:var(--plum);
-  padding:12px 30px;
-  border:2px solid var(--plum);
-  border-radius:12px;
-  font-weight:600;
-  position:relative;
-  transition:all 0.3s;
+nav a {
+  text-decoration: none;
+  font-family: "Playfair Display", serif;
+  background: var(--lime-green);
+  color: var(--plum);
+  padding: 12px 30px;
+  border: 2px solid var(--plum);
+  border-radius: 12px;
+  font-weight: 600;
+  position: relative;
+  transition: all 0.3s;
 }
-nav a:hover{ background: var(--hot-pink); color:var(--cream);}
-nav a::before{
-  content:"";
-  position:absolute;top:8px;left:8px;right:8px;bottom:8px;
-  border:1px dashed var(--plum);
-  border-radius:10px;
-  pointer-events:none;
+nav a:hover {
+  background: var(--bright-pink);
+  color: var(--white);
+}
+nav a::before {
+  content: "";
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  right: 8px;
+  bottom: 8px;
+  border: 1px dashed var(--plum);
+  border-radius: 10px;
+  pointer-events: none;
 }
 
 /* HEADER */
-header{
-  min-height:100vh;
-  display:flex;justify-content:center;align-items:center;text-align:center;
-  background: repeating-linear-gradient(45deg,var(--hot-pink) 20px,var(--lime) 20px,var(--lime) 40px);
+header {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background: repeating-linear-gradient(
+    45deg,
+    var(--bright-pink) 20px,
+    var(--lime-green) 20px,
+    var(--lime-green) 40px
+  );
 }
-h1{
-  font-family:"Playfair Display",serif;font-size:clamp(3rem,7vw,5rem);
-  background: var(--cream);padding:25px 45px;border-radius:10px;
-  box-shadow:0 10px 30px rgba(0,0,0,0.1);
+h1 {
+  font-family: "Playfair Display", serif;
+  font-size: clamp(3rem, 7vw, 5rem);
+  background: var(--cream);
+  padding: 25px 45px;
+  border-radius: 10px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
 }
-.subtitle{margin-top:20px;font-style:italic;color:var(--brown);font-weight:600;letter-spacing:0.1em;}
+.subtitle {
+  margin-top: 20px;
+  font-style: italic;
+  color: var(--brown);
+  font-weight: 600;
+  letter-spacing: 0.1em;
+}
 
 /* SECTIONS */
-section{
-  padding:140px 10%;opacity:0;transform:translateY(50px);transition:all 1s ease;position:relative;
+section {
+  padding: 140px 10%;
+  opacity: 0;
+  transform: translateY(50px);
+  transition: all 1s ease;
+  position: relative;
 }
-section.visible{opacity:1;transform:translateY(0);}
+section.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
 
 /* ZINE PAGE */
-.zine-page{
-  background:white;padding:60px;border-radius:14px;box-shadow:0 20px 40px rgba(0,0,0,0.08);
-  position:relative;border:1px solid #e5e0da;overflow:visible;
+.zine-page {
+  background: white;
+  padding: 60px;
+  border-radius: 14px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+  position: relative;
+  border: 1px solid #e5e0da;
+  overflow: visible;
 }
-.zine-page::before{
-  content:"";
-  position:absolute;inset:0;
-  background-image:url("https://www.transparenttextures.com/patterns/paper-fibers.png");
-  opacity:0.12;border-radius:14px;
-  pointer-events:none;
-  z-index:2;
+.zine-page::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("https://www.transparenttextures.com/patterns/paper-fibers.png");
+  opacity: 0.12;
+  border-radius: 14px;
+  pointer-events: none;
+  z-index: 2;
 }
-.zine-page::after{
-  content:"";
-  position:absolute;top:-20px;left:30px;width:120px;height:30px;
-  background:#fff8dccc;transform:rotate(-6deg);border-radius:6px;
-  border:1px solid #f0e2b6;box-shadow:0 5px 8px rgba(0,0,0,0.12);z-index:3;
+.zine-page::after {
+  content: "";
+  position: absolute;
+  top: -20px;
+  left: 30px;
+  width: 120px;
+  height: 30px;
+  background: #fff8dccc;
+  transform: rotate(-6deg);
+  border-radius: 6px;
+  border: 1px solid #f0e2b6;
+  box-shadow: 0 5px 8px rgba(0, 0, 0, 0.12);
+  z-index: 3;
 }
 
 /* STITCH BORDER */
-.zine-page:before{
-  content:"";position:absolute;top:15px;left:15px;right:15px;bottom:15px;
-  border:2px dashed var(--brown);border-radius:14px;pointer-events:none;z-index:4;
+.zine-page:before {
+  content: "";
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  right: 15px;
+  bottom: 15px;
+  border: 2px dashed var(--brown);
+  border-radius: 14px;
+  pointer-events: none;
+  z-index: 4;
 }
 
 /* PLAID BACKGROUNDS */
-#paintings { background: repeating-linear-gradient(45deg,var(--hot-pink) 20px,var(--lime) 20px,var(--lime) 40px); position:relative;}
-#fiber { background: repeating-linear-gradient(135deg,var(--hot-pink) 25px,var(--lime) 25px,var(--lime) 50px); position:relative;}
+#paintings {
+  position: relative;
+  background-color: var(--white);
+  background-image: repeating-linear-gradient(
+      90deg,
+      var(--bright-pink) 0 10px,
+      var(--soft-yellow) 10px 20px,
+      var(--soft-purple) 20px 30px,
+      var(--lime-green) 30px 40px,
+      var(--bright-pink) 40px 50px
+    ),
+    repeating-linear-gradient(
+      0deg,
+      var(--bright-pink) 0 12px,
+      var(--soft-yellow) 12px 24px,
+      var(--soft-purple) 24px 36px,
+      var(--lime-green) 36px 48px,
+      var(--bright-pink) 48px 60px
+    );
+  background-blend-mode: multiply;
+}
+
+#fiber {
+  position: relative;
+  background-color: var(--white);
+  background-image: repeating-linear-gradient(
+      90deg,
+      var(--soft-purple) 0 15px,
+      var(--bright-pink) 15px 25px,
+      var(--lime-green) 25px 35px,
+      var(--soft-yellow) 35px 45px,
+      var(--soft-purple) 45px 55px
+    ),
+    repeating-linear-gradient(
+      0deg,
+      var(--lime-green) 0 15px,
+      var(--bright-pink) 15px 25px,
+      var(--soft-purple) 25px 35px,
+      var(--soft-yellow) 35px 45px,
+      var(--lime-green) 45px 55px
+    );
+  background-blend-mode: multiply;
+}
 
 /* GRID */
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:40px;z-index:10;position:relative;}
-.art-piece img{width:100%;border-radius:12px;box-shadow:0 5px 12px rgba(0,0,0,0.12);}
-.caption{margin-top:10px;font-size:0.85rem;font-style:italic;color:var(--brown);}
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 40px;
+  z-index: 10;
+  position: relative;
+}
+.art-piece img {
+  width: 100%;
+  border-radius: 12px;
+  box-shadow: 0 5px 12px rgba(0, 0, 0, 0.12);
+}
+.caption {
+  margin-top: 10px;
+  font-size: 0.85rem;
+  font-style: italic;
+  color: var(--brown);
+}
 
 /* CONTACT */
-#contact{background:var(--plum);color:var(--cream);text-align:center;padding:140px 10%;}
-footer{text-align:center;padding:40px;font-size:0.8rem;background:var(--cream);color:var(--plum);}
+#contact {
+  background: var(--plum);
+  color: var(--white);
+  text-align: center;
+  padding: 140px 10%;
+}
+footer {
+  text-align: center;
+  padding: 40px;
+  font-size: 0.8rem;
+  background: var(--cream);
+  color: var(--plum);
+}
 
 /* PAPER SCRAPS */
-.paper-scrap{
-  position:absolute;background:#fffef8;border:1px solid #f3e8c9;padding:20px 25px;
-  font-size:0.75rem;font-family:"IBM Plex Mono",monospace;color:var(--brown);
-  box-shadow:2px 5px 12px rgba(0,0,0,0.08);
-  transform:rotate(-2deg);border-radius:10px;user-select:none;pointer-events:none;z-index:20;
+.paper-scrap {
+  position: absolute;
+  background: #fffef8;
+  border: 1px solid #f3e8c9;
+  padding: 20px 25px;
+  font-size: 0.75rem;
+  font-family: "IBM Plex Mono", monospace;
+  color: var(--brown);
+  box-shadow: 2px 5px 12px rgba(0, 0, 0, 0.08);
+  transform: rotate(-2deg);
+  border-radius: 10px;
+  user-select: none;
+  pointer-events: none;
+  z-index: 20;
 }
-
-/* INTERACTIVE PLAID PATCHES */
-.plaid-square{
-  position:absolute;width:40px;height:40px;opacity:0.6;
-  transition:transform 0.3s ease, box-shadow 0.3s ease;
-}
-.plaid-square:hover{ transform: translate(-5px,-5px) rotate(5deg); box-shadow:2px 6px 12px rgba(0,0,0,0.2); z-index:10;}
-.plaid-square.lime{background-color:var(--lime);}
-.plaid-square.pink{background-color:var(--hot-pink);}
 </style>
 </head>
 <body>
-
 <nav>
-<a href="#paintings">Paintings</a>
-<a href="#fiber">Fiber</a>
-<a href="#about">About</a>
-<a href="#contact">Contact</a>
+  <a href="#paintings">Paintings</a>
+  <a href="#fiber">Fiber</a>
+  <a href="#about">About</a>
+  <a href="#contact">Contact</a>
 </nav>
 
 <header>
-<div><h1>Lilly Gould</h1><div class="subtitle">Painter & Fiber Artist</div></div>
+  <div>
+    <h1>Lilly Gould</h1>
+    <div class="subtitle">Painter & Fiber Artist</div>
+  </div>
 </header>
 
 <section id="paintings">
-<div class="zine-page">
-<h2>Paintings</h2>
-<div class="grid">
-<div class="art-piece"><img src="painting1.jpg" alt=""><div class="caption">Title — Acrylic — 2026</div></div>
-<div class="art-piece"><img src="painting2.jpg" alt=""><div class="caption">Title — Oil — 2026</div></div>
-</div>
-<div class="paper-scrap">Colors & plaid from vision board</div>
-</div>
+  <div class="zine-page">
+    <h2>Paintings</h2>
+    <div class="grid">
+      <div class="art-piece">
+        <img src="painting1.jpg" alt="Painting 1" />
+        <div class="caption">Title — Acrylic — 2026</div>
+      </div>
+      <div class="art-piece">
+        <img src="painting2.jpg" alt="Painting 2" />
+        <div class="caption">Title — Oil — 2026</div>
+      </div>
+    </div>
+    <div class="paper-scrap">Colors & plaid inspired by fabric photo</div>
+  </div>
 </section>
 
 <section id="fiber">
-<div class="zine-page">
-<h2>Fiber Work</h2>
-<div class="grid">
-<div class="art-piece"><img src="fiber1.jpg" alt=""><div class="caption">Quilt — 2026</div></div>
-<div class="art-piece"><img src="fiber2.jpg" alt=""><div class="caption">Tapestry — 2026</div></div>
-</div>
-<div class="paper-scrap">Plaid textures & layered textiles</div>
-</div>
+  <div class="zine-page">
+    <h2>Fiber Work</h2>
+    <div class="grid">
+      <div class="art-piece">
+        <img src="fiber1.jpg" alt="Fiber 1" />
+        <div class="caption">Quilt — 2026</div>
+      </div>
+      <div class="art-piece">
+        <img src="fiber2.jpg" alt="Fiber 2" />
+        <div class="caption">Tapestry — 2026</div>
+      </div>
+    </div>
+    <div class="paper-scrap">Plaid textures & layered textiles</div>
+  </div>
 </section>
 
 <section id="about">
-<div class="zine-page">
-<h2>About</h2>
-<p>Lilly Gould works across painting and fiber, exploring domestic interiors, textile repetition, softness, and layered pattern.</p>
-<div class="paper-scrap">Handmade vibes, stitched stories</div>
-</div>
+  <div class="zine-page">
+    <h2>About</h2>
+    <p>
+      Lilly Gould works across painting and fiber, exploring domestic interiors,
+      textile repetition, softness, and layered pattern.
+    </p>
+    <div class="paper-scrap">Handmade vibes, stitched stories</div>
+  </div>
 </section>
 
 <section id="contact">
-<h2>Contact</h2>
-<p>Email: your@email.com</p>
-<p>Instagram: @yourhandle</p>
+  <h2>Contact</h2>
+  <p>Email: your@email.com</p>
+  <p>Instagram: @yourhandle</p>
 </section>
 
 <footer>© 2026 Lilly Gould</footer>
 
 <script>
 // Scroll reveal
-const sections=document.querySelectorAll("section");
-const observer=new IntersectionObserver(entries=>{
-entries.forEach(entry=>{
-if(entry.isIntersecting){entry.target.classList.add("visible");}
-});
-},{threshold:0.2});
-sections.forEach(section=>observer.observe(section));
-
-// Generate random interactive plaid squares
-function generatePlaidSquares(sectionId,count){
-  const section=document.getElementById(sectionId);
-  for(let i=0;i<count;i++){
-    const square=document.createElement("div");
-    square.classList.add("plaid-square");
-    square.classList.add(Math.random()>0.5?"pink":"lime");
-    square.style.top=Math.random()*section.offsetHeight+"px";
-    square.style.left=Math.random()*section.offsetWidth+"px";
-    section.appendChild(square);
-  }
-}
-
-// Generate 15 squares per section
-generatePlaidSquares("paintings",15);
-generatePlaidSquares("fiber",15);
+const sections = document.querySelectorAll("section");
+const observer = new IntersectionObserver(
+  (entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("visible");
+      }
+    });
+  },
+  { threshold: 0.2 }
+);
+sections.forEach((section) => observer.observe(section));
 </script>
 </body>
 </html>
