@@ -1,75 +1,334 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Lilly Gould — Booklet</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Lilly Gould — Textile Zine Enhanced v2</title>
+<link
+  href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=IBM+Plex+Mono&display=swap"
+  rel="stylesheet"
+/>
 <style>
-body{
-margin:0;
-font-family:serif;
-scroll-snap-type:y mandatory;
-overflow-y:scroll;
+:root {
+    --bright-pink: #ff4fa3;
+    --lime: #c4ff00;
+    --butter: #f6d365;
+    --sky: #8ecae6;
+    --plum: #5e2b5f;
+    --brown: #7a4e2d;
+    --cream: #fdf8f2;
 }
 
-.page{
-height:100vh;
-scroll-snap-align:start;
-display:flex;
-align-items:center;
-justify-content:center;
-padding:40px;
-box-sizing:border-box;
+/* Smooth scroll */
+html { scroll-behavior: smooth; }
+
+body {
+    margin: 0;
+    background: var(--cream);
+    font-family: "IBM Plex Mono", monospace;
+    color: var(--plum);
+    overflow-x: hidden;
 }
 
-.page:nth-child(1){background:#fdf8f2;}
-.page:nth-child(2){background:#e97a9d;}
-.page:nth-child(3){background:#f6d365;}
-.page:nth-child(4){background:#8ecae6;}
-
-.content{
-background:white;
-padding:60px;
-max-width:700px;
-box-shadow:0 20px 40px rgba(0,0,0,0.15);
+/* PAPER TEXTURE */
+body::before {
+    content:"";
+    pointer-events:none;
+    position:fixed;
+    top:0;left:0;width:100%;height:100%;
+    background-image: url("https://www.transparenttextures.com/patterns/paper-fibers.png");
+    opacity: 0.15;
+    z-index:-1;
 }
 
-img{
-max-width:100%;
-display:block;
-margin-top:20px;
+/* NAVIGATION - QUILT BLOCK STYLE */
+nav {
+    position: fixed;
+    top:0;width:100%;
+    background: var(--cream);
+    border-bottom: 2px solid var(--brown);
+    padding:15px 0;
+    display:flex;
+    justify-content:center;
+    gap:20px;
+    z-index:1000;
+    box-shadow:0 3px 5px rgba(0,0,0,0.05);
 }
+
+nav a {
+    background: var(--lime);
+    color: var(--plum);
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-decoration:none;
+    padding:12px 30px;
+    border:2px solid var(--plum);
+    border-radius:12px;
+    position:relative;
+    box-shadow: inset 0 0 0 2px var(--plum);
+    font-family: "Playfair Display", serif;
+    letter-spacing: 1.1px;
+    user-select:none;
+    transition: all 0.3s ease;
+}
+
+nav a:hover, nav a:focus {
+    background: var(--bright-pink);
+    color: var(--cream);
+    border-color: var(--plum);
+    box-shadow: inset 0 0 8px var(--plum);
+}
+
+/* Faux stitching effect on nav links */
+nav a::before {
+    content:"";
+    position:absolute;
+    top:8px;left:8px;right:8px;bottom:8px;
+    border:1px dashed var(--plum);
+    border-radius:10px;
+    pointer-events:none;
+}
+
+/* HEADER */
+header {
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    background:
+    repeating-linear-gradient(90deg,var(--bright-pink),var(--bright-pink) 60px,var(--lime) 60px,var(--lime) 120px);
+}
+
+h1 {
+    font-family: "Playfair Display", serif;
+    font-size: clamp(3rem, 7vw, 5rem);
+    background: var(--cream);
+    padding:25px 45px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    border-radius:10px;
+}
+
+.subtitle {
+    margin-top:20px;
+    font-style:italic;
+    color: var(--brown);
+    font-weight:600;
+    letter-spacing:0.1em;
+}
+
+/* SECTION BASE */
+section {
+    padding:140px 10%;
+    opacity:0;
+    transform: translateY(50px);
+    transition: all 1s ease;
+    position:relative;
+    z-index:0;
+}
+
+section.visible { opacity:1; transform:translateY(0); }
+
+/* ZINE PAGE */
+.zine-page {
+    background:white;
+    padding:60px;
+    box-shadow:0 20px 40px rgba(0,0,0,0.08);
+    position:relative;
+    border-radius:14px;
+    border:1px solid #e5e0da;
+    overflow:visible;
+}
+
+/* PAPER TEXTURE OVERLAY ON CONTENT */
+.zine-page::before {
+    content:"";
+    position:absolute;
+    pointer-events:none;
+    inset:0;
+    background-image: url("https://www.transparenttextures.com/patterns/paper-fibers.png");
+    opacity:0.12;
+    border-radius:14px;
+    z-index:2;
+}
+
+/* SCRAPBOOK TAPE CORNERS */
+.zine-page::after {
+    content:"";
+    position:absolute;
+    top:-20px;left:30px;
+    width:120px;height:30px;
+    background:#fff8dccc;
+    box-shadow:0 5px 8px rgba(0,0,0,0.12);
+    transform: rotate(-6deg);
+    border-radius:6px;
+    z-index:3;
+    border:1px solid #f0e2b6;
+}
+
+/* Stitched border */
+.zine-page:before {
+    content:"";
+    position:absolute;
+    top:15px;left:15px;right:15px;bottom:15px;
+    border:2px dashed var(--brown);
+    pointer-events:none;
+    border-radius:14px;
+    z-index:4;
+}
+
+/* BACKGROUNDS WITH PLAID ELEMENTS */
+#paintings {
+    background:
+    linear-gradient(0deg, var(--bright-pink) 25%, transparent 25%),
+    linear-gradient(90deg, var(--lime) 25%, transparent 25%),
+    var(--cream);
+    background-size: 40px 40px;
+}
+
+#fiber {
+    background:
+    repeating-linear-gradient(0deg, var(--butter), var(--butter) 60px, var(--bright-pink) 60px, var(--bright-pink) 120px),
+    repeating-linear-gradient(90deg, var(--lime), var(--lime) 60px, var(--plum) 60px, var(--plum) 120px);
+}
+
+/* GRID */
+.grid {
+    display:grid;
+    grid-template-columns: repeat(auto-fit,minmax(280px,1fr));
+    gap:40px;
+    position: relative;
+    z-index:10;
+}
+
+.art-piece img {
+    width:100%;
+    display:block;
+    border-radius:12px;
+    box-shadow:0 5px 12px rgba(0,0,0,0.12);
+}
+
+.caption {
+    margin-top:10px;
+    font-size:0.85rem;
+    font-style:italic;
+    color: var(--brown);
+}
+
+/* CONTACT */
+#contact {
+    background: var(--plum);
+    color: var(--cream);
+    text-align:center;
+    padding:140px 10%;
+}
+
+footer {
+    text-align:center;
+    padding:40px;
+    font-size:0.8rem;
+    background: var(--cream);
+    color: var(--plum);
+}
+
+/* SCRAPBOOK "POST-IT" STYLE PAPER SCRAPS */
+.paper-scrap {
+    position:absolute;
+    background:#fffef8;
+    border:1px solid #f3e8c9;
+    padding:20px 25px;
+    font-size:0.75rem;
+    font-family: "IBM Plex Mono", monospace;
+    color: var(--brown);
+    box-shadow: 2px 5px 12px rgba(0,0,0,0.08);
+    transform: rotate(-2deg);
+    border-radius:10px;
+    user-select:none;
+    pointer-events:none;
+    z-index:20;
+}
+
+#paintings .paper-scrap { top:10px; right:-140px; width:160px; }
+#fiber .paper-scrap { bottom:20px; left:-130px; width:170px; transform:rotate(3deg); }
+#about .paper-scrap { top:20px; left:-130px; width:170px; transform:rotate(-3deg); }
+
 </style>
 </head>
 <body>
+<nav>
+<a href="#paintings">Paintings</a>
+<a href="#fiber">Fiber</a>
+<a href="#about">About</a>
+<a href="#contact">Contact</a>
+</nav>
 
-<div class="page">
-<div class="content">
+<header>
+<div>
 <h1>Lilly Gould</h1>
-<p>Painter & Fiber Artist</p>
+<div class="subtitle">Painter & Fiber Artist</div>
 </div>
-</div>
+</header>
 
-<div class="page">
-<div class="content">
+<section id="paintings">
+<div class="zine-page">
 <h2>Paintings</h2>
-<img src="painting1.jpg">
+<div class="grid">
+<div class="art-piece">
+<img src="painting1.jpg" alt="Painting 1" />
+<div class="caption">Title — Acrylic — 2026</div>
+</div>
+<div class="art-piece">
+<img src="painting2.jpg" alt="Painting 2" />
+<div class="caption">Title — Oil — 2026</div>
 </div>
 </div>
+<div class="paper-scrap">Favorite colors: bright pink & lime green.</div>
+</div>
+</section>
 
-<div class="page">
-<div class="content">
+<section id="fiber">
+<div class="zine-page">
 <h2>Fiber Work</h2>
-<img src="fiber1.jpg">
+<div class="grid">
+<div class="art-piece">
+<img src="fiber1.jpg" alt="Fiber Art 1" />
+<div class="caption">Quilt — 2026</div>
+</div>
+<div class="art-piece">
+<img src="fiber2.jpg" alt="Fiber Art 2" />
+<div class="caption">Tapestry — 2026</div>
 </div>
 </div>
+<div class="paper-scrap">Inspired by vintage textiles & plaid patterns.</div>
+</div>
+</section>
 
-<div class="page">
-<div class="content">
+<section id="about">
+<div class="zine-page">
+<h2>About</h2>
+<p>Lilly Gould works across painting and fiber, exploring domestic interiors, textile repetition, softness, and layered pattern.</p>
+<div class="paper-scrap">Handmade vibes, stitched stories.</div>
+</div>
+</section>
+
+<section id="contact">
 <h2>Contact</h2>
 <p>Email: your@email.com</p>
-</div>
-</div>
+<p>Instagram: @yourhandle</p>
+</section>
 
+<footer>© 2026 Lilly Gould</footer>
+
+<script>
+const sections = document.querySelectorAll("section");
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if(entry.isIntersecting){
+      entry.target.classList.add("visible");
+    }
+  });
+},{threshold:0.2});
+sections.forEach(section=>observer.observe(section));
+</script>
 </body>
 </html>
