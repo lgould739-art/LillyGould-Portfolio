@@ -7,11 +7,11 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=IBM+Plex+Mono&display=swap" rel="stylesheet" />
 <style>
 :root {
-  --bright-pink: #d9006c;
-  --soft-purple: #b08de0;
-  --lime-green: #b0e819;
-  --soft-yellow: #f0e87f;
-  --white: #fefefe;
+  --pink: #d92984;         /* vibrant pink */
+  --purple: #bb98d7;       /* soft purple */
+  --lime-green: #c8d74e;   /* lime green */
+  --buttery-yellow: #f9f1a5; /* pale buttery yellow */
+  --white: #fff;
   --plum: #5e2b5f;
   --brown: #7a4e2d;
   --cream: #fdf8f2;
@@ -70,7 +70,7 @@ nav a {
   transition: all 0.3s;
 }
 nav a:hover {
-  background: var(--bright-pink);
+  background: var(--pink);
   color: var(--white);
 }
 nav a::before {
@@ -85,19 +85,33 @@ nav a::before {
   pointer-events: none;
 }
 
-/* HEADER */
+/* HEADER with PLAID from reference */
 header {
   min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
   text-align: center;
-  background: repeating-linear-gradient(
-    45deg,
-    var(--bright-pink) 20px,
-    var(--lime-green) 20px,
-    var(--lime-green) 40px
-  );
+  background-color: var(--white);
+  background-image:
+    repeating-linear-gradient(
+      90deg,
+      var(--pink) 0 12px,
+      var(--buttery-yellow) 12px 20px,
+      var(--purple) 20px 30px,
+      var(--lime-green) 30px 38px,
+      var(--pink) 38px 50px
+    ),
+    repeating-linear-gradient(
+      0deg,
+      var(--pink) 0 12px,
+      var(--buttery-yellow) 12px 20px,
+      var(--purple) 20px 30px,
+      var(--lime-green) 30px 38px,
+      var(--pink) 38px 50px
+    );
+  background-blend-mode: multiply;
+  background-size: 50px 50px;
 }
 h1 {
   font-family: "Playfair Display", serif;
@@ -177,49 +191,56 @@ section.visible {
   z-index: 4;
 }
 
-/* PLAID BACKGROUNDS */
+/* BACKGROUND VARIATIONS */
+
+/* Paintings: PLAID background */
 #paintings {
   position: relative;
   background-color: var(--white);
-  background-image: repeating-linear-gradient(
+  background-image:
+    repeating-linear-gradient(
       90deg,
-      var(--bright-pink) 0 10px,
-      var(--soft-yellow) 10px 20px,
-      var(--soft-purple) 20px 30px,
-      var(--lime-green) 30px 40px,
-      var(--bright-pink) 40px 50px
+      var(--pink) 0 10px,
+      var(--buttery-yellow) 10px 18px,
+      var(--purple) 18px 28px,
+      var(--lime-green) 28px 38px,
+      var(--pink) 38px 48px
     ),
     repeating-linear-gradient(
       0deg,
-      var(--bright-pink) 0 12px,
-      var(--soft-yellow) 12px 24px,
-      var(--soft-purple) 24px 36px,
-      var(--lime-green) 36px 48px,
-      var(--bright-pink) 48px 60px
+      var(--pink) 0 10px,
+      var(--buttery-yellow) 10px 18px,
+      var(--purple) 18px 28px,
+      var(--lime-green) 28px 38px,
+      var(--pink) 38px 48px
     );
   background-blend-mode: multiply;
+  background-size: 48px 48px;
 }
 
+/* Fiber: STRIPES background */
 #fiber {
   position: relative;
   background-color: var(--white);
-  background-image: repeating-linear-gradient(
-      90deg,
-      var(--soft-purple) 0 15px,
-      var(--bright-pink) 15px 25px,
-      var(--lime-green) 25px 35px,
-      var(--soft-yellow) 35px 45px,
-      var(--soft-purple) 45px 55px
-    ),
+  background-image:
     repeating-linear-gradient(
-      0deg,
-      var(--lime-green) 0 15px,
-      var(--bright-pink) 15px 25px,
-      var(--soft-purple) 25px 35px,
-      var(--soft-yellow) 35px 45px,
-      var(--lime-green) 45px 55px
+      90deg,
+      var(--pink) 0 15px,
+      var(--lime-green) 15px 30px,
+      var(--buttery-yellow) 30px 45px,
+      var(--purple) 45px 60px
     );
-  background-blend-mode: multiply;
+}
+
+/* About: POLKA DOTS background */
+#about {
+  position: relative;
+  background-color: var(--white);
+  background-image:
+    radial-gradient(var(--pink) 8%, transparent 9%),
+    radial-gradient(var(--purple) 8%, transparent 9%);
+  background-position: 0 0, 25px 25px;
+  background-size: 50px 50px;
 }
 
 /* GRID */
