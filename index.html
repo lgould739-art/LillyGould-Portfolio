@@ -3,7 +3,8 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Lilly Gould — Textile Zine Inspired by Soft Pastel Plaid</title>
+<title>Lilly Gould — Textile Portfolio</title>
+
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=IBM+Plex+Mono&display=swap" rel="stylesheet" />
 
 <style>
@@ -25,8 +26,7 @@ body {
   font-family: "IBM Plex Mono", monospace;
   color: var(--plum);
   background: var(--cream);
-  overflow-x: hidden;
-  position: relative;
+  overflow: hidden; /* locked until plaid opens */
 }
 
 /* PAPER TEXTURE */
@@ -51,7 +51,7 @@ nav {
   background: var(--cream);
   padding: 15px 0;
   border-bottom: 1px solid var(--brown);
-  z-index: 1000;
+  z-index: 100;
 }
 
 nav a {
@@ -77,62 +77,78 @@ nav a:hover::after {
   width: 100%;
 }
 
-/* HEADER */
-header {
-  position: relative;
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  background: white;
+/* FULL SCREEN PLAID HERO */
+#hero {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
   overflow: hidden;
 }
 
-/* WEAVE OVERLAY */
-.weave-overlay {
+/* Plaid panels */
+.plaid-left,
+.plaid-right {
   position: absolute;
-  inset: 0;
-  z-index: 1;
-  pointer-events: none;
-}
-
-.weave.vertical {
-  position: absolute;
-  inset: 0;
-  background-image: repeating-linear-gradient(
-    90deg,
-    var(--pink) 0 40px,
-    var(--buttery-yellow) 40px 80px,
-    var(--rosy-pink) 80px 120px,
-    var(--lime-green) 120px 160px
-  );
+  top: 0;
+  height: 100%;
+  width: 50%;
+  background-image:
+    repeating-linear-gradient(
+      90deg,
+      var(--pink) 0 40px,
+      var(--buttery-yellow) 40px 80px,
+      var(--rosy-pink) 80px 120px,
+      var(--lime-green) 120px 160px
+    ),
+    repeating-linear-gradient(
+      0deg,
+      var(--pink) 0 40px,
+      var(--buttery-yellow) 40px 80px,
+      var(--rosy-pink) 80px 120px,
+      var(--lime-green) 120px 160px
+    );
+  background-blend-mode: multiply;
   background-size: 160px 160px;
 }
 
-.weave.horizontal {
-  position: absolute;
-  inset: 0;
-  background-image: repeating-linear-gradient(
-    0deg,
-    var(--pink) 0 40px,
-    var(--buttery-yellow) 40px 80px,
-    var(--rosy-pink) 80px 120px,
-    var(--lime-green) 120px 160px
-  );
-  background-size: 160px 160px;
-  mix-blend-mode: multiply;
+.plaid-left {
+  left: 0;
 }
 
+.plaid-right {
+  right: 0;
+}
+
+/* Center seam shadow */
+#hero::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 2px;
+  height: 100%;
+  background: rgba(0,0,0,0.15);
+  transform: translateX(-50%);
+  z-index: 5;
+}
+
+/* Title overlay */
 .hero-content {
-  position: relative;
-  z-index: 2;
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  pointer-events: none;
+  z-index: 10;
 }
 
 h1 {
   font-family: "Playfair Display", serif;
   font-size: clamp(3rem, 7vw, 5rem);
-  letter-spacing: 0.1em;
+  color: white;
+  mix-blend-mode: difference;
   margin: 0;
 }
 
@@ -141,7 +157,8 @@ h1 {
   font-size: 0.7rem;
   letter-spacing: 0.3em;
   text-transform: uppercase;
-  color: var(--brown);
+  color: white;
+  mix-blend-mode: difference;
 }
 
 /* SECTIONS */
@@ -149,8 +166,7 @@ section {
   padding: 140px 10%;
   opacity: 0;
   transform: translateY(50px);
-  transition: all 1s ease;
-  position: relative;
+  transition: 1s ease;
 }
 
 section.visible {
@@ -162,7 +178,6 @@ section.visible {
 .zine-page {
   background: white;
   padding: 60px;
-  border-radius: 0;
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
   border: 1px solid #e5e0da;
 }
@@ -175,14 +190,6 @@ section.visible {
 
 .art-piece img {
   width: 100%;
-  opacity: 0;
-  transform: translateY(20px);
-  transition: 1.2s ease;
-}
-
-.art-piece.visible img {
-  opacity: 1;
-  transform: translateY(0);
 }
 
 .caption {
@@ -194,7 +201,7 @@ section.visible {
 
 #contact {
   background: var(--plum);
-  color: var(--white);
+  color: white;
   text-align: center;
   padding: 140px 10%;
 }
@@ -203,7 +210,6 @@ footer {
   text-align: center;
   padding: 40px;
   font-size: 0.8rem;
-  background: var(--cream);
 }
 </style>
 </head>
@@ -217,17 +223,16 @@ footer {
   <a href="#contact">Contact</a>
 </nav>
 
-<header>
-  <div class="weave-overlay">
-    <div class="weave vertical"></div>
-    <div class="weave horizontal"></div>
-  </div>
+<!-- FULL SCREEN PLAID -->
+<div id="hero">
+  <div class="plaid-left"></div>
+  <div class="plaid-right"></div>
 
   <div class="hero-content">
     <h1>Lilly Gould</h1>
     <div class="subtitle">Painter & Fiber Artist</div>
   </div>
-</header>
+</div>
 
 <section id="paintings">
   <div class="zine-page">
@@ -280,38 +285,43 @@ footer {
 <footer>© 2026 Lilly Gould</footer>
 
 <script>
-// Section reveal
+// Reveal sections
 const sections = document.querySelectorAll("section");
 const observer = new IntersectionObserver(
-  (entries) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add("visible");
-      }
+  entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) entry.target.classList.add("visible");
     });
   },
   { threshold: 0.2 }
 );
-sections.forEach((section) => observer.observe(section));
+sections.forEach(section => observer.observe(section));
 
-// Unweave animation
-const vertical = document.querySelector(".weave.vertical");
-const horizontal = document.querySelector(".weave.horizontal");
-const header = document.querySelector("header");
+// Split plaid on scroll
+let opened = false;
+const hero = document.getElementById("hero");
+const left = document.querySelector(".plaid-left");
+const right = document.querySelector(".plaid-right");
 
-window.addEventListener("scroll", () => {
-  const scrollY = window.scrollY;
-  const headerHeight = header.offsetHeight;
+window.addEventListener("wheel", (e) => {
+  if (opened) return;
 
-  const progress = Math.min(scrollY / (headerHeight * 1.2), 1);
+  if (e.deltaY > 10) {
+    opened = true;
 
-  vertical.style.transform = `translateX(${progress * 200}px)`;
-  horizontal.style.transform = `translateY(-${progress * 200}px)`;
+    left.style.transition = "transform 1.4s cubic-bezier(.77,0,.18,1)";
+    right.style.transition = "transform 1.4s cubic-bezier(.77,0,.18,1)";
+    hero.style.transition = "opacity 0.6s ease 1.2s";
 
-  vertical.style.opacity = 1 - progress;
-  horizontal.style.opacity = 1 - progress;
+    left.style.transform = "translateX(-100%)";
+    right.style.transform = "translateX(100%)";
+    hero.style.opacity = "0";
 
-  header.style.transform = `scale(${1 - progress * 0.04})`;
+    setTimeout(() => {
+      hero.style.display = "none";
+      document.body.style.overflow = "auto";
+    }, 1800);
+  }
 });
 </script>
 
