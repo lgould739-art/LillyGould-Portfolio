@@ -19,16 +19,23 @@
   --cream: #fdf8f2;
 }
 
-html { scroll-behavior: smooth; }
+html {
+  scroll-behavior: smooth;
+  overflow-y: hidden; /* start locked */
+}
 body {
   margin: 0;
   font-family: "IBM Plex Mono", monospace;
   color: var(--plum);
   background: var(--cream);
   overflow-x: hidden;
+  position: relative;
 }
 
-/* Paper texture */
+body.scroll-enabled {
+  overflow-y: auto; /* enable scrolling after animation */
+}
+
 body::before {
   content: "";
   position: fixed;
@@ -39,7 +46,6 @@ body::before {
   z-index: -1;
 }
 
-/* Navigation */
 nav {
   position: fixed;
   top: 0;
@@ -51,6 +57,7 @@ nav {
   padding: 15px 0;
   border-bottom: 1px solid var(--brown);
   z-index: 100;
+  pointer-events: auto;
 }
 nav a {
   text-decoration: none;
@@ -69,7 +76,9 @@ nav a::after {
   transition: 0.4s;
   margin-top: 4px;
 }
-nav a:hover::after { width: 100%; }
+nav a:hover::after {
+  width: 100%;
+}
 
 /* ---------- CURTAIN HERO ---------- */
 #hero {
@@ -78,11 +87,14 @@ nav a:hover::after { width: 100%; }
   z-index: 2000;
   overflow: hidden;
   pointer-events: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-/* Curtain panels */
-.plaid-left,
-.plaid-right {
+/* CURTAIN PANELS as layered divs for folds */
+
+.plaid-left, .plaid-right {
   position: fixed;
   top: 0;
   height: 100%;
@@ -104,15 +116,92 @@ nav a:hover::after { width: 100%; }
     );
   background-blend-mode: multiply;
   background-size: 160px 160px;
-  box-shadow: inset 0 0 20px rgba(0,0,0,0.05);
-  transition: transform 1.2s cubic-bezier(.77,0,.18,1);
+  box-shadow:
+    inset 5px 0 20px rgba(0, 0, 0, 0.15),
+    inset -5px 0 15px rgba(0, 0, 0, 0.1);
+  transition: transform 1.2s cubic-bezier(.77,0,.18,1), clip-path 1.2s cubic-bezier(.77,0,.18,1);
   z-index: 1000;
+  pointer-events: none;
+  overflow: visible;
+  will-change: transform, clip-path;
 }
 
-.plaid-left { left: 0; transform-origin: left center; }
-.plaid-right { right: 0; transform-origin: right center; }
+/* Left panel folds shape - closed (covers half) */
+.plaid-left {
+  left: 0;
+  transform-origin: left center;
+  clip-path: polygon(
+    0 0,
+    100% 0,
+    100% 100%,
+    0 100%
+  );
+  box-shadow:
+    inset 5px 0 20px rgba(0, 0, 0, 0.25),
+    inset -5px 0 15px rgba(0, 0, 0, 0.15),
+    /* fold lines */
+    linear-gradient(to right, transparent 65%, rgba(0,0,0,0.15) 70%, transparent 75%) 30px 0 / 30px 100% repeat-y,
+    linear-gradient(to right, transparent 80%, rgba(255,255,255,0.15) 85%, transparent 90%) 70px 0 / 30px 100% repeat-y;
+}
 
-/* Name card */
+/* Right panel folds shape - closed */
+.plaid-right {
+  right: 0;
+  transform-origin: right center;
+  clip-path: polygon(
+    0 0,
+    100% 0,
+    100% 100%,
+    0 100%
+  );
+  box-shadow:
+    inset -5px 0 20px rgba(0, 0, 0, 0.25),
+    inset 5px 0 15px rgba(0, 0, 0, 0.15),
+    /* fold lines */
+    linear-gradient(to left, transparent 65%, rgba(0,0,0,0.15) 70%, transparent 75%) 30px 0 / 30px 100% repeat-y,
+    linear-gradient(to left, transparent 80%, rgba(255,255,255,0.15) 85%, transparent 90%) 70px 0 / 30px 100% repeat-y;
+}
+
+/* Open state with folds pulled back and shaped */
+
+.plaid-left.open {
+  transform: translateX(-95%) scaleX(0.9);
+  clip-path: polygon(
+    0 0,
+    85% 0,
+    100% 25%,
+    100% 75%,
+    85% 100%,
+    0 100%
+  );
+  box-shadow:
+    inset 10px 0 30px rgba(0, 0, 0, 0.4),
+    inset -8px 0 25px rgba(0, 0, 0, 0.3),
+    /* fold shading */
+    linear-gradient(to right, transparent 50%, rgba(0,0,0,0.3) 65%, transparent 85%) 15px 0 / 25px 100% repeat-y,
+    linear-gradient(to right, transparent 80%, rgba(255,255,255,0.2) 90%, transparent 100%) 55px 0 / 25px 100% repeat-y;
+}
+
+.plaid-right.open {
+  transform: translateX(95%) scaleX(0.9);
+  clip-path: polygon(
+    15% 0,
+    100% 0,
+    100% 100%,
+    15% 100%,
+    0 75%,
+    0 25%
+  );
+  box-shadow:
+    inset -10px 0 30px rgba(0, 0, 0, 0.4),
+    inset 8px 0 25px rgba(0, 0, 0, 0.3),
+    /* fold shading */
+    linear-gradient(to left, transparent 50%, rgba(0,0,0,0.3) 65%, transparent 85%) 15px 0 / 25px 100% repeat-y,
+    linear-gradient(to left, transparent 80%, rgba(255,255,255,0.2) 90%, transparent 100%) 55px 0 / 25px 100% repeat-y;
+}
+
+/* Name card in center */
+
 .hero-content {
   position: fixed;
   inset: 0;
@@ -129,6 +218,7 @@ nav a:hover::after { width: 100%; }
   padding: 40px 60px;
   box-shadow: 0 20px 40px rgba(0,0,0,0.15);
   text-align: center;
+  border-radius: 8px;
 }
 
 h1 {
@@ -149,6 +239,9 @@ section {
   padding: 140px 10%;
   position: relative;
   z-index: 1;
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .zine-page {
@@ -214,7 +307,9 @@ section {
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 40px;
 }
-.art-piece img { width: 100%; }
+.art-piece img {
+  width: 100%;
+}
 
 footer {
   text-align: center;
@@ -252,11 +347,11 @@ footer {
     <h2>Paintings</h2>
     <div class="grid">
       <div class="art-piece">
-        <img src="painting1.jpg">
+        <img src="painting1.jpg" alt="Painting 1" />
         <div class="caption">Title — Acrylic — 2026</div>
       </div>
       <div class="art-piece">
-        <img src="painting2.jpg">
+        <img src="painting2.jpg" alt="Painting 2" />
         <div class="caption">Title — Oil — 2026</div>
       </div>
     </div>
@@ -268,11 +363,11 @@ footer {
     <h2>Fiber Work</h2>
     <div class="grid">
       <div class="art-piece">
-        <img src="fiber1.jpg">
+        <img src="fiber1.jpg" alt="Fiber 1" />
         <div class="caption">Quilt — 2026</div>
       </div>
       <div class="art-piece">
-        <img src="fiber2.jpg">
+        <img src="fiber2.jpg" alt="Fiber 2" />
         <div class="caption">Tapestry — 2026</div>
       </div>
     </div>
@@ -301,18 +396,60 @@ footer {
 const left = document.querySelector(".plaid-left");
 const right = document.querySelector(".plaid-right");
 const heroContent = document.querySelector(".hero-content");
-
 let opened = false;
+let scrollingEnabled = false;
 
-window.addEventListener("scroll", () => {
-  const scrollY = window.scrollY;
+function openCurtains() {
+  left.classList.add("open");
+  right.classList.add("open");
+  heroContent.style.opacity = "0";
 
-  if (!opened && scrollY > 20) {
-    // Draw curtains open
-    left.style.transform = "translateX(-100%)";
-    right.style.transform = "translateX(100%)";
-    heroContent.style.opacity = "0";
-    opened = true;
+  setTimeout(() => {
+    document.body.classList.add("scroll-enabled");
+    scrollingEnabled = true;
+  }, 1200);
+}
+
+function closeCurtains() {
+  left.classList.remove("open");
+  right.classList.remove("open");
+  heroContent.style.opacity = "1";
+
+  document.body.classList.remove("scroll-enabled");
+  scrollingEnabled = false;
+}
+
+// Lock scroll initially (done with CSS overflow-y: hidden on html + body)
+
+window.addEventListener("wheel", (e) => {
+  if (!scrollingEnabled) {
+    if (e.deltaY > 0) {
+      // Scroll down attempt - open curtains
+      openCurtains();
+    }
+    e.preventDefault();
+  } else {
+    // When scroll is enabled, check if user scrolls back to top
+    if (window.scrollY <= 10 && e.deltaY < 0) {
+      closeCurtains();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      e.preventDefault();
+    }
+  }
+}, { passive: false });
+
+window.addEventListener("touchmove", (e) => {
+  if (!scrollingEnabled) {
+    e.preventDefault();
+  }
+}, { passive: false });
+
+// Also close curtains if user scrolls up on keyboard/pageup keys
+
+window.addEventListener("keydown", (e) => {
+  if (scrollingEnabled && window.scrollY <= 10 && (e.key === "ArrowUp" || e.key === "PageUp" || e.key === "Home")) {
+    closeCurtains();
+    window.scrollTo({ top: 0, behavior: "smooth" });
   }
 });
 </script>
