@@ -26,10 +26,10 @@ body {
   font-family: "IBM Plex Mono", monospace;
   color: var(--plum);
   background: var(--cream);
-  overflow: hidden; /* locked until plaid opens */
+  overflow-x: hidden;
 }
 
-/* PAPER TEXTURE */
+/* Paper texture */
 body::before {
   content: "";
   position: fixed;
@@ -40,7 +40,7 @@ body::before {
   z-index: -1;
 }
 
-/* NAV */
+/* Navigation */
 nav {
   position: fixed;
   top: 0;
@@ -73,11 +73,9 @@ nav a::after {
   margin-top: 4px;
 }
 
-nav a:hover::after {
-  width: 100%;
-}
+nav a:hover::after { width: 100%; }
 
-/* FULL SCREEN PLAID HERO */
+/* ---------- HERO INTRO ---------- */
 #hero {
   position: fixed;
   inset: 0;
@@ -109,46 +107,33 @@ nav a:hover::after {
     );
   background-blend-mode: multiply;
   background-size: 160px 160px;
+  transition: transform 1.2s cubic-bezier(.77,0,.18,1);
 }
 
-.plaid-left {
-  left: 0;
-}
+.plaid-left { left: 0; }
+.plaid-right { right: 0; }
 
-.plaid-right {
-  right: 0;
-}
-
-/* Center seam shadow */
-#hero::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 50%;
-  width: 2px;
-  height: 100%;
-  background: rgba(0,0,0,0.15);
-  transform: translateX(-50%);
-  z-index: 5;
-}
-
-/* Title overlay */
+/* White name card */
 .hero-content {
   position: absolute;
   inset: 0;
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
-  pointer-events: none;
   z-index: 10;
+  pointer-events: none;
+}
+
+.name-card {
+  background: white;
+  padding: 40px 60px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+  text-align: center;
 }
 
 h1 {
   font-family: "Playfair Display", serif;
   font-size: clamp(3rem, 7vw, 5rem);
-  color: white;
-  mix-blend-mode: difference;
   margin: 0;
 }
 
@@ -157,59 +142,86 @@ h1 {
   font-size: 0.7rem;
   letter-spacing: 0.3em;
   text-transform: uppercase;
-  color: white;
-  mix-blend-mode: difference;
+  color: var(--brown);
 }
 
-/* SECTIONS */
+/* ---------- SECTIONS ---------- */
 section {
   padding: 140px 10%;
-  opacity: 0;
-  transform: translateY(50px);
-  transition: 1s ease;
+  position: relative;
 }
 
-section.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* ZINE PAGE */
 .zine-page {
   background: white;
   padding: 60px;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
   border: 1px solid #e5e0da;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.08);
 }
 
+/* Paintings — polka dots */
+#paintings {
+  background-color: var(--white);
+  background-image:
+    radial-gradient(var(--pink) 8%, transparent 9%),
+    radial-gradient(var(--rosy-pink) 8%, transparent 9%);
+  background-position: 0 0, 50px 50px;
+  background-size: 100px 100px;
+}
+
+/* Fiber — plaid */
+#fiber {
+  background-image:
+    repeating-linear-gradient(
+      90deg,
+      var(--pink) 0 40px,
+      var(--buttery-yellow) 40px 80px,
+      var(--rosy-pink) 80px 120px,
+      var(--lime-green) 120px 160px
+    ),
+    repeating-linear-gradient(
+      0deg,
+      var(--pink) 0 40px,
+      var(--buttery-yellow) 40px 80px,
+      var(--rosy-pink) 80px 120px,
+      var(--lime-green) 120px 160px
+    );
+  background-blend-mode: multiply;
+  background-size: 160px 160px;
+}
+
+/* About — stripes */
+#about {
+  background-image:
+    repeating-linear-gradient(
+      90deg,
+      var(--pink) 0 25px,
+      var(--lime-green) 25px 50px,
+      var(--buttery-yellow) 50px 75px,
+      var(--rosy-pink) 75px 100px
+    );
+}
+
+/* Contact */
+#contact {
+  background: var(--plum);
+  color: white;
+  text-align: center;
+}
+
+/* Grid */
 .grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 40px;
 }
 
-.art-piece img {
-  width: 100%;
-}
-
-.caption {
-  margin-top: 10px;
-  font-size: 0.85rem;
-  font-style: italic;
-  color: var(--brown);
-}
-
-#contact {
-  background: var(--plum);
-  color: white;
-  text-align: center;
-  padding: 140px 10%;
-}
+.art-piece img { width: 100%; }
 
 footer {
   text-align: center;
   padding: 40px;
   font-size: 0.8rem;
+  background: var(--cream);
 }
 </style>
 </head>
@@ -223,14 +235,16 @@ footer {
   <a href="#contact">Contact</a>
 </nav>
 
-<!-- FULL SCREEN PLAID -->
+<!-- INTRO PLAID -->
 <div id="hero">
   <div class="plaid-left"></div>
   <div class="plaid-right"></div>
 
   <div class="hero-content">
-    <h1>Lilly Gould</h1>
-    <div class="subtitle">Painter & Fiber Artist</div>
+    <div class="name-card">
+      <h1>Lilly Gould</h1>
+      <div class="subtitle">Painter & Fiber Artist</div>
+    </div>
   </div>
 </div>
 
@@ -239,11 +253,11 @@ footer {
     <h2>Paintings</h2>
     <div class="grid">
       <div class="art-piece">
-        <img src="painting1.jpg" alt="Painting 1" />
+        <img src="painting1.jpg">
         <div class="caption">Title — Acrylic — 2026</div>
       </div>
       <div class="art-piece">
-        <img src="painting2.jpg" alt="Painting 2" />
+        <img src="painting2.jpg">
         <div class="caption">Title — Oil — 2026</div>
       </div>
     </div>
@@ -255,11 +269,11 @@ footer {
     <h2>Fiber Work</h2>
     <div class="grid">
       <div class="art-piece">
-        <img src="fiber1.jpg" alt="Fiber 1" />
+        <img src="fiber1.jpg">
         <div class="caption">Quilt — 2026</div>
       </div>
       <div class="art-piece">
-        <img src="fiber2.jpg" alt="Fiber 2" />
+        <img src="fiber2.jpg">
         <div class="caption">Tapestry — 2026</div>
       </div>
     </div>
@@ -285,42 +299,43 @@ footer {
 <footer>© 2026 Lilly Gould</footer>
 
 <script>
-// Reveal sections
-const sections = document.querySelectorAll("section");
-const observer = new IntersectionObserver(
-  entries => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) entry.target.classList.add("visible");
-    });
-  },
-  { threshold: 0.2 }
-);
-sections.forEach(section => observer.observe(section));
+let isOpen = false;
+let isAnimating = false;
 
-// Split plaid on scroll
-let opened = false;
 const hero = document.getElementById("hero");
 const left = document.querySelector(".plaid-left");
 const right = document.querySelector(".plaid-right");
 
+function openHero() {
+  if (isAnimating || isOpen) return;
+  isAnimating = true;
+  isOpen = true;
+
+  left.style.transform = "translateX(-100%)";
+  right.style.transform = "translateX(100%)";
+
+  setTimeout(() => { isAnimating = false; }, 1200);
+}
+
+function closeHero() {
+  if (isAnimating || !isOpen) return;
+  isAnimating = true;
+  isOpen = false;
+
+  left.style.transform = "translateX(0)";
+  right.style.transform = "translateX(0)";
+
+  setTimeout(() => { isAnimating = false; }, 1200);
+}
+
 window.addEventListener("wheel", (e) => {
-  if (opened) return;
+  const atTop = window.scrollY === 0;
 
-  if (e.deltaY > 10) {
-    opened = true;
-
-    left.style.transition = "transform 1.4s cubic-bezier(.77,0,.18,1)";
-    right.style.transition = "transform 1.4s cubic-bezier(.77,0,.18,1)";
-    hero.style.transition = "opacity 0.6s ease 1.2s";
-
-    left.style.transform = "translateX(-100%)";
-    right.style.transform = "translateX(100%)";
-    hero.style.opacity = "0";
-
-    setTimeout(() => {
-      hero.style.display = "none";
-      document.body.style.overflow = "auto";
-    }, 1800);
+  if (e.deltaY > 10 && !isOpen) {
+    openHero();
+  }
+  if (e.deltaY < -10 && atTop && isOpen) {
+    closeHero();
   }
 });
 </script>
