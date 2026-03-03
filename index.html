@@ -19,7 +19,6 @@
   --cream: #fdf8f2;
 }
 
-/* Basic reset */
 html { scroll-behavior: smooth; }
 body {
   margin: 0;
@@ -72,18 +71,19 @@ nav a::after {
 }
 nav a:hover::after { width: 100%; }
 
-/* ---------- HERO INTRO ---------- */
+/* ---------- CURTAIN HERO ---------- */
 #hero {
   position: fixed;
   inset: 0;
   z-index: 2000;
-  perspective: 1500px; /* Enable 3D perspective */
+  overflow: hidden;
+  pointer-events: none;
 }
 
-/* Plaid panels */
+/* Curtain panels */
 .plaid-left,
 .plaid-right {
-  position: absolute;
+  position: fixed;
   top: 0;
   height: 100%;
   width: 50%;
@@ -104,24 +104,26 @@ nav a:hover::after { width: 100%; }
     );
   background-blend-mode: multiply;
   background-size: 160px 160px;
-  transform-origin: center; 
   box-shadow: inset 0 0 20px rgba(0,0,0,0.05);
+  transition: transform 1.2s cubic-bezier(.77,0,.18,1);
+  z-index: 1000;
 }
 
-/* Left panel origin on right edge, right panel origin on left edge */
-.plaid-left { left: 0; transform-origin: right center; }
-.plaid-right { right: 0; transform-origin: left center; }
+.plaid-left { left: 0; transform-origin: left center; }
+.plaid-right { right: 0; transform-origin: right center; }
 
-/* White name card */
+/* Name card */
 .hero-content {
-  position: absolute;
+  position: fixed;
   inset: 0;
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 10;
+  z-index: 1500;
   pointer-events: none;
+  transition: opacity 0.6s ease;
 }
+
 .name-card {
   background: white;
   padding: 40px 60px;
@@ -146,6 +148,7 @@ h1 {
 section {
   padding: 140px 10%;
   position: relative;
+  z-index: 1;
 }
 
 .zine-page {
@@ -231,7 +234,7 @@ footer {
   <a href="#contact">Contact</a>
 </nav>
 
-<!-- INTRO PLAID -->
+<!-- CURTAIN HERO -->
 <div id="hero">
   <div class="plaid-left"></div>
   <div class="plaid-right"></div>
@@ -295,43 +298,22 @@ footer {
 <footer>© 2026 Lilly Gould</footer>
 
 <script>
-let isOpen = false;
-let isAnimating = false;
-
-const hero = document.getElementById("hero");
 const left = document.querySelector(".plaid-left");
 const right = document.querySelector(".plaid-right");
+const heroContent = document.querySelector(".hero-content");
 
-/* Open with 3D peel */
-function openHero() {
-  if (isAnimating || isOpen) return;
-  isAnimating = true;
-  isOpen = true;
+let opened = false;
 
-  left.style.transform = "translateX(-50%) rotateY(-25deg)";
-  right.style.transform = "translateX(50%) rotateY(25deg)";
+window.addEventListener("scroll", () => {
+  const scrollY = window.scrollY;
 
-  setTimeout(() => { isAnimating = false; }, 1200);
-}
-
-/* Close with 3D peel */
-function closeHero() {
-  if (isAnimating || !isOpen) return;
-  isAnimating = true;
-  isOpen = false;
-
-  left.style.transform = "translateX(0) rotateY(0deg)";
-  right.style.transform = "translateX(0) rotateY(0deg)";
-
-  setTimeout(() => { isAnimating = false; }, 1200);
-}
-
-/* Scroll detection */
-window.addEventListener("wheel", (e) => {
-  const atTop = window.scrollY === 0;
-
-  if (e.deltaY > 10 && !isOpen) openHero();
-  if (e.deltaY < -10 && atTop && isOpen) closeHero();
+  if (!opened && scrollY > 20) {
+    // Draw curtains open
+    left.style.transform = "translateX(-100%)";
+    right.style.transform = "translateX(100%)";
+    heroContent.style.opacity = "0";
+    opened = true;
+  }
 });
 </script>
 
